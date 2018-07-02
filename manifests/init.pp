@@ -94,7 +94,7 @@ class unbound (
   Boolean                                              $minimal_responses,
   Boolean                                              $disable_dnssec_lame_check,    # version 1.5.9
   Optional[Stdlib::Absolutepath]                       $trust_anchor_file,
-  Stdlib::Absolutepath                                 $auto_trust_anchor_file,
+  Optional[Stdlib::Absolutepath]                       $auto_trust_anchor_file,
   Optional[Array[String]]                              $trust_anchor,
   Stdlib::Absolutepath                                 $trusted_keys_file,
   Boolean                                              $trust_anchor_signaling,       # version 1.6.4
