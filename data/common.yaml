@@ -91,7 +91,7 @@ unbound::rrset_roundrobin: false
 unbound::minimal_responses: false
 unbound::disable_dnssec_lame_check: false
 unbound::trust_anchor_file: ~
-unbound::auto_trust_anchor_file: "%{hiera('unbound::runtime_dir')}/root.key"
+unbound::auto_trust_anchor_file: ~
 unbound::trust_anchor: ~
 unbound::trusted_keys_file: "%{hiera('unbound::keys_d')}/*.key"
 unbound::trust_anchor_signaling: true
