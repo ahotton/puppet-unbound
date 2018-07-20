@@ -262,13 +262,19 @@ class unbound (
     ensure => file,
     mode   => '0444',
   }
-
-  concat { $config_file:
-    validate_cmd => $validate_cmd,
-    notify       => Service[$service_name],
-    require      => Exec['download-anchor-file'],
+  if $enable_download_anchor_file {
+    concat { $config_file:
+      validate_cmd => $validate_cmd,
+      notify       => Service[$service_name],
+      require      => Exec['download-anchor-file'],
+    }
   }
-
+  else {
+    concat { $config_file:
+      validate_cmd  => $validate_cmd,
+      notify        => Service[$service_name],
+    }
+  }
   concat::fragment { 'unbound-header':
     order   => '00',
     target  => $config_file,
