@@ -137,6 +137,7 @@ class unbound (
   Hash                                                 $record,
   Array                                                $access,
   String                                               $anchor_fetch_command,
+  Boolean                                              $enable_download_anchor_file,
   String                                               $conf_d,
   String                                               $confdir,
   String                                               $config_file,
@@ -245,17 +246,18 @@ class unbound (
     before  => [ Concat::Fragment['unbound-header'] ],
     require => File[$dirs],
   }
-
-  exec { 'download-anchor-file':
-    command => $anchor_fetch_command,
-    creates => $auto_trust_anchor_file,
-    user    => $owner,
-    path    => ['/usr/sbin','/usr/local/sbin'],
-    returns => 1,
-    before  => [ Concat::Fragment['unbound-header'] ],
-    require => File[$runtime_dir],
+  
+  if $enable_download_anchor_file {
+    exec { 'download-anchor-file':
+      command => $anchor_fetch_command,
+      creates => $auto_trust_anchor_file,
+      user    => $owner,
+      path    => ['/usr/sbin','/usr/local/sbin'],
+      returns => 1,
+      before  => [ Concat::Fragment['unbound-header'] ],
+      require => File[$runtime_dir],
+    }
   }
-
   file { $hints_file:
     ensure => file,
     mode   => '0444',
